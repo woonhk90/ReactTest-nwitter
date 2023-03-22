@@ -1,4 +1,3 @@
-import { async } from "@firebase/util";
 import React, { useState } from "react";
 import {
   authService,
@@ -10,6 +9,7 @@ const Auth = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [newAccount, setNewAccount] = useState(true);
+  const [error, setError] = useState("");
   const onChange = (event) => {
     const { name, value } = event.target;
     if (name === "email") {
@@ -20,7 +20,6 @@ const Auth = () => {
   };
   const onSubmit = async (event) => {
     event.preventDefault();
-    console.log(newAccount);
     try {
       let data;
       if (newAccount) {
@@ -30,9 +29,10 @@ const Auth = () => {
       }
       console.log("DATA:", data);
     } catch (error) {
-      console.log("ERROR:", error);
+      setError(error.message);
     }
   };
+  const toggleAccount = () => setNewAccount((prev) => !prev);
 
   return (
     <div>
@@ -54,7 +54,11 @@ const Auth = () => {
           value={password}
         />
         <input type="submit" value={newAccount ? "Create Account" : "Log In"} />
+        {error}
       </form>
+      <span onClick={toggleAccount}>
+        {newAccount ? "Sign In" : "Create Account"}
+      </span>
       <div>
         <button>Continue with Google</button>
         <button>Continue with Github</button>
