@@ -1,7 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
 import AppRouter from "./components/Router";
 import { authService } from "./fbase";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 function App() {
   /* ------------------ 로그인 여부 확인 ( authService.currentUser ) ----------------- */
