@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Nweet from "../components/Nweet";
 import {
   dbService,
   dbAddDoc,
@@ -36,11 +37,6 @@ const Home = (props) => {
   };
   return (
     <div>
-      {nweets.map((v) => (
-        <div key={v.id}>
-          <h4>{v.text}</h4>
-        </div>
-      ))}
       <form onSubmit={onSubmit}>
         <input
           value={nweet}
@@ -50,6 +46,13 @@ const Home = (props) => {
         ></input>
         <input type="submit" value="Nweet" />
       </form>
+      {nweets.map((v) => (
+        <Nweet
+          key={v.id}
+          nweetObj={v}
+          isOwner={v.creatorId === props.userObj.uid}
+        />
+      ))}
     </div>
   );
 };
