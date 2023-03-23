@@ -14,6 +14,9 @@ import {
   getDocs,
   onSnapshot,
   query,
+  doc,
+  deleteDoc,
+  updateDoc,
 } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -40,3 +43,7 @@ export const dbCollection = collection;
 export const dbGetDoc = getDocs;
 export const dbSnapshot = onSnapshot;
 export const dbQuery = query;
+
+export const dbDoc = doc; // 삭제, 수정
+export const dbDelete = deleteDoc; // 삭제
+export const dbUpdate = updateDoc; // 삭제
