@@ -3,6 +3,7 @@ import AppRouter from "./components/Router";
 import { authService } from "./fbase";
 
 function App() {
+  const [userObj, setUserObj] = useState(null);
   /* ------------------ 로그인 여부 확인 ( authService.currentUser ) ----------------- */
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [init, setInit] = useState(false);
@@ -11,6 +12,7 @@ function App() {
     authService.onAuthStateChanged((user) => {
       if (user) {
         setIsLoggedIn(true);
+        setUserObj(user);
       } else {
         setIsLoggedIn(false);
       }
@@ -20,7 +22,11 @@ function App() {
 
   return (
     <Fragment>
-      {init ? <AppRouter isLoggedIn={isLoggedIn} /> : "Initializing..."}
+      {init ? (
+        <AppRouter isLoggedIn={isLoggedIn} userObj={userObj} />
+      ) : (
+        "Initializing..."
+      )}
       <footer>&copy; {new Date().getFullYear()} Nwitter </footer>
     </Fragment>
   );
