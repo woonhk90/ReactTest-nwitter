@@ -12,6 +12,7 @@ import {
 const Home = (props) => {
   const [nweet, setNweet] = useState("");
   const [nweets, setNweets] = useState([]);
+  const [attachment, setAttachment] = useState();
   useEffect(() => {
     const query = dbQuery(dbCollection(dbService, "nweets"));
     dbSnapshot(query, (snapshot) => {
@@ -43,11 +44,15 @@ const Home = (props) => {
 
     const reader = new FileReader(); // filereader API
     reader.readAsDataURL(theFile); // 파일을 읽음
-    // event listener를 reader에 추가
+    /* ------------------------- 읽기 완료 후 onloadend이벤트 발생 ------------------------ */
     reader.onloadend = (finishedEvent) => {
-      console.log(finishedEvent);
+      const {
+        currentTarget: { result },
+      } = finishedEvent;
+      setAttachment(result);
     };
   };
+  const onClearAttachment = () => setAttachment(null);
   return (
     <div>
       <form onSubmit={onSubmit}>
@@ -59,6 +64,12 @@ const Home = (props) => {
         />
         <input type="file" accept="image/*" onChange={onFileHandler} />
         <input type="submit" value="Nweet" />
+        {attachment && (
+          <div>
+            <img src={attachment} width="50px" height="50px" />
+            <button onClick={onClearAttachment}>Clear</button>
+          </div>
+        )}
       </form>
       {nweets.map((v) => (
         <Nweet
