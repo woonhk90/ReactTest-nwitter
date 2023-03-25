@@ -35,6 +35,19 @@ const Home = (props) => {
     const { value } = event.target;
     setNweet(value);
   };
+
+  const onFileHandler = (event) => {
+    console.log(event);
+    const { files } = event.target;
+    const theFile = files[0];
+
+    const reader = new FileReader(); // filereader API
+    reader.readAsDataURL(theFile); // 파일을 읽음
+    // event listener를 reader에 추가
+    reader.onloadend = (finishedEvent) => {
+      console.log(finishedEvent);
+    };
+  };
   return (
     <div>
       <form onSubmit={onSubmit}>
@@ -43,7 +56,8 @@ const Home = (props) => {
           onChange={onChange}
           placeholder="What's on your mind?"
           maxLength={120}
-        ></input>
+        />
+        <input type="file" accept="image/*" onChange={onFileHandler} />
         <input type="submit" value="Nweet" />
       </form>
       {nweets.map((v) => (
