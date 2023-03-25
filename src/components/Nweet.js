@@ -1,6 +1,15 @@
 import { async } from "@firebase/util";
+import { getStorage } from "firebase/storage";
 import React, { useState } from "react";
-import { dbService, dbDoc, dbDelete, dbUpdate } from "../fbase";
+import {
+  dbService,
+  dbDoc,
+  dbDelete,
+  dbUpdate,
+  upDeleteObject,
+  upRef,
+  upStorage,
+} from "../fbase";
 
 const Nweet = ({ nweetObj, isOwner }) => {
   const [editing, setEditing] = useState(false);
@@ -9,6 +18,7 @@ const Nweet = ({ nweetObj, isOwner }) => {
     const ok = window.confirm("Are you sure you want to delete this nweet?");
     if (ok) {
       await dbDelete(dbDoc(dbService, "nweets", `${nweetObj.id}`));
+      await upDeleteObject(upRef(upStorage, nweetObj.attachmentUrl));
     }
   };
   const toggleEditing = () => setEditing((prev) => !prev);

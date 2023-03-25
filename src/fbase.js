@@ -23,6 +23,7 @@ import {
   ref,
   uploadString,
   getDownloadURL,
+  deleteObject,
 } from "firebase/storage";
 
 const firebaseConfig = {
@@ -59,3 +60,4 @@ export const upStorage = getStorage();
 export const upRef = ref;
 export const upPutString = uploadString;
 export const upGetDownLoadURL = getDownloadURL;
+export const upDeleteObject = deleteObject;
