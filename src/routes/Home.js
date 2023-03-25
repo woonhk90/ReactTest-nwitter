@@ -17,7 +17,7 @@ import { v4 as uuidv4 } from "uuid";
 const Home = (props) => {
   const [nweet, setNweet] = useState("");
   const [nweets, setNweets] = useState([]);
-  const [attachment, setAttachment] = useState();
+  const [attachment, setAttachment] = useState("");
   useEffect(() => {
     const query = dbQuery(dbCollection(dbService, "nweets"));
     dbSnapshot(query, (snapshot) => {

@@ -17,6 +17,8 @@ import {
   doc,
   deleteDoc,
   updateDoc,
+  where,
+  orderBy,
 } from "firebase/firestore";
 import {
   getStorage,
@@ -48,6 +50,8 @@ export const dbService = getFirestore();
 export const dbAddDoc = addDoc;
 export const dbCollection = collection;
 export const dbGetDoc = getDocs;
+export const dbWhere = where;
+export const dbOrderBy = orderBy;
 
 export const dbSnapshot = onSnapshot; // 데이터베이스에서 무슨일이 있을 때, 알림을 받음
 export const dbQuery = query;

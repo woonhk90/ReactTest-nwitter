@@ -21,7 +21,7 @@ const AppRouter = (props) => {
               <Home userObj={props.userObj} />
             </Route>
             <Route exact path="/profile">
-              <Profile />
+              <Profile userObj={props.userObj} />
             </Route>
             {/* 위 Route를 제외한 나머지(*)는 to(/)로 넘겨라 */}
             {/* <Redirect from="*" to="/" /> */}
