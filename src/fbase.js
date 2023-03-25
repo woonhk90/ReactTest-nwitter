@@ -6,6 +6,7 @@ import {
   GoogleAuthProvider,
   GithubAuthProvider,
   signInWithPopup,
+  updateProfile,
 } from "firebase/auth";
 import {
   getFirestore,
@@ -45,6 +46,7 @@ export const authService = getAuth();
 export const createUserEmailPassword = createUserWithEmailAndPassword;
 export const signInEmailPassword = signInWithEmailAndPassword;
 export const signInPopup = signInWithPopup;
+export const authUpdateProfile = updateProfile;
 
 export const dbService = getFirestore();
 export const dbAddDoc = addDoc;

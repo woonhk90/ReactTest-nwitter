@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import { async } from "@firebase/util";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import {
   authService,
@@ -9,15 +10,18 @@ import {
   dbQuery,
   dbSnapshot,
   dbOrderBy,
+  authUpdateProfile,
 } from "../fbase";
 
-const Profile = ({ userObj }) => {
+const Profile = ({ userObj, refreshUser }) => {
+  const [newDisplayName, setNewDisplayName] = useState(userObj.displayName);
   const history = useHistory();
   const onLogOutClick = () => {
     authService.signOut();
     history.push("/");
   };
 
+  /* -------------------------------- 내가 쓴거만 찾기 ------------------------------- */
   const getMyMweets = async () => {
     const query = dbQuery(
       dbCollection(dbService, "nweets"),
@@ -42,8 +46,28 @@ const Profile = ({ userObj }) => {
   useEffect(() => {
     getMyMweets();
   }, []);
+
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    if (newDisplayName !== userObj.displayName) {
+      await authUpdateProfile(userObj, { displayName: newDisplayName });
+    }
+    refreshUser();
+  };
+  const onChange = (e) => {
+    setNewDisplayName(e.target.value);
+  };
   return (
     <>
+      <form onSubmit={onSubmit}>
+        <input
+          type="text"
+          placeholder="Display name"
+          onChange={onChange}
+          value={newDisplayName}
+        />
+        <input type="submit" value="Update Profile" />
+      </form>
       <button onClick={onLogOutClick}>Log Out</button>
     </>
   );

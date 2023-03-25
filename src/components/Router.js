@@ -13,7 +13,7 @@ import Navigation from "./Navigation";
 const AppRouter = (props) => {
   return (
     <Router>
-      {props.isLoggedIn && <Navigation />}
+      {props.isLoggedIn && <Navigation userObj={props.userObj} />}
       <Switch>
         {props.isLoggedIn ? (
           <>
@@ -21,7 +21,10 @@ const AppRouter = (props) => {
               <Home userObj={props.userObj} />
             </Route>
             <Route exact path="/profile">
-              <Profile userObj={props.userObj} />
+              <Profile
+                userObj={props.userObj}
+                refreshUser={props.refreshUser}
+              />
             </Route>
             {/* 위 Route를 제외한 나머지(*)는 to(/)로 넘겨라 */}
             {/* <Redirect from="*" to="/" /> */}
