@@ -10,8 +10,8 @@ import {
   upStorage,
   upRef,
   upPutString,
+  upGetDownLoadURL,
 } from "../fbase";
-import { getStorage, ref, uploadString } from "firebase/storage";
 import { v4 as uuidv4 } from "uuid";
 
 const Home = (props) => {
@@ -30,20 +30,24 @@ const Home = (props) => {
   }, []);
   const onSubmit = async (event) => {
     event.preventDefault();
-
-    // const storage = getStorage();
-    // const storageRef = ref(storage, `${props.userObj.uid}/${uuidv4()}`);
-    // console.log(storageRef);
-
-    const fileRef = upRef(upStorage, `${props.userObj.uid}/${uuidv4()}`);
-    const response = await upPutString(fileRef, attachment, "data_url");
-    console.log(response);
-    // await dbAddDoc(dbCollection(dbService, "nweets"), {
-    //   text: nweet,
-    //   createdAt: Date.now(),
-    //   creatorId: props.userObj.uid,
-    // });
-    // setNweet("");
+    let attachmentUrl = "";
+    if (attachment) {
+      const attachmentRef = upRef(
+        upStorage,
+        `${props.userObj.uid}/${uuidv4()}`
+      );
+      const response = await upPutString(attachmentRef, attachment, "data_url");
+      attachmentUrl = await upGetDownLoadURL(response.ref);
+    }
+    const nweetObj = {
+      text: nweet,
+      createdAt: Date.now(),
+      creatorId: props.userObj.uid,
+      attachmentUrl,
+    };
+    await dbAddDoc(dbCollection(dbService, "nweets"), nweetObj);
+    setNweet("");
+    setAttachment("");
   };
   const onChange = (event) => {
     const { value } = event.target;

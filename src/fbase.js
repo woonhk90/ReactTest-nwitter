@@ -18,7 +18,12 @@ import {
   deleteDoc,
   updateDoc,
 } from "firebase/firestore";
-import { getStorage, ref, uploadString } from "firebase/storage";
+import {
+  getStorage,
+  ref,
+  uploadString,
+  getDownloadURL,
+} from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -53,3 +58,4 @@ export const dbUpdate = updateDoc; // 삭제
 export const upStorage = getStorage();
 export const upRef = ref;
 export const upPutString = uploadString;
+export const upGetDownLoadURL = getDownloadURL;
